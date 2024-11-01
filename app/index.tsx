@@ -4,15 +4,36 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
+  ScrollView,
+  Dimensions,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Feather from "@expo/vector-icons/Feather";
+import Entypo from "@expo/vector-icons/Entypo";
+import Carousel from "react-native-reanimated-carousel";
+import { useSharedValue } from "react-native-reanimated";
+import api from "@/lib/api";
 
 export default function Index() {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [locations, setLocations] = useState([1, 2, 3]);
+  const width = Dimensions.get("window").width;
+  const progress = useSharedValue<number>(0);
+  const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
+
+  const data = [...new Array(6).keys()];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await api.get(`current.json?key=${API_KEY}&q=London`);
+      console.log(res.data);
+    };
+    fetchData();
+  }, []);
 
   const handleLocation = (loc) => {
     console.log(loc);
@@ -72,6 +93,66 @@ export default function Index() {
               })}
             </View>
           )}
+        </View>
+        <View className="flex-1 mx-4 justify-around mb-2">
+          <Text className="text-white text-center text-2xl font-bold">
+            London,
+            <Text className="text-lg font-semibold text-gray-300">
+              United Kingdown
+            </Text>
+          </Text>
+          <View className="flex-row justify-center">
+            <Image
+              source={require("../assets/images/sun.png")}
+              className="w-52 h-52"
+            />
+          </View>
+          <View className="space-y-2">
+            <Text className="text-center font-bold text-white text-6xl ml-5">
+              23°C
+            </Text>
+            <Text className="text-center text-white text-xl ml-5">
+              Partly Cloudy
+            </Text>
+          </View>
+          <View className="flex-row justify-between mx-4">
+            <View className="flex-row space-x-2 items-center gap-2">
+              <Entypo name="drop" size={24} color="white" />
+              <Text className="text-white font-semibold text-base">22km</Text>
+            </View>
+            <View className="flex-row space-x-2 items-center gap-2">
+              <Feather name="wind" size={24} color="white" />
+              <Text className="text-white font-semibold text-base">22km</Text>
+            </View>
+            <View className="flex-row space-x-2 items-center gap-2">
+              <Feather name="sun" size={24} color="white" />
+              <Text className="text-white font-semibold text-base">22km</Text>
+            </View>
+          </View>
+        </View>
+        <View className="flex-1 mx-auto">
+          <Carousel
+            width={width - 20}
+            height={width / 2}
+            data={data}
+            loop={false}
+            scrollAnimationDuration={500}
+            onSnapToItem={(index) => console.log("current index:", index)}
+            mode="parallax"
+            renderItem={({ index }) => (
+              <View
+                style={{
+                  flex: 1,
+                  borderWidth: 1,
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ textAlign: "center", fontSize: 30 }}>
+                  {index}
+                </Text>
+              </View>
+            )}
+          />
         </View>
       </SafeAreaView>
     </View>
