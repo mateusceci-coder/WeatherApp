@@ -1,15 +1,36 @@
-import { Stack } from "expo-router";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import "../global.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import index from "./index";
+import Forecast from "./Forecast";
+
+const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-      </Stack>
+      <Stack.Navigator initialRouteName="index">
+        <Stack.Screen
+          name="index"
+          component={index}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Forecast"
+          component={Forecast}
+          options={({ route }) => ({
+            title: route.params.title || "Forecast", // Fallback title if title is not provided
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: { fontWeight: "bold", fontSize: 28 },
+            headerTitleAlign: "center",
+          })}
+        />
+      </Stack.Navigator>
     </QueryClientProvider>
   );
 }
