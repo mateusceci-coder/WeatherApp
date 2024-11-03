@@ -9,10 +9,10 @@ type CurrentContainerProps = {
 
 const CurrentContainer = ({ location, current }: CurrentContainerProps) => {
   return (
-    <View className="flex-1 mx-4 justify-around mb-2">
-      <Text className="text-white text-center text-2xl font-bold">
+    <View className="flex-1 mx-4 justify-around mb-2 mt-16">
+      <Text className="text-white text-center text-5xl font-bold pt-4">
         {location?.name},{" "}
-        <Text className="text-lg font-semibold text-gray-300">
+        <Text className="text-4xl font-semibold text-gray-300">
           {location?.country}
         </Text>
       </Text>
@@ -24,7 +24,7 @@ const CurrentContainer = ({ location, current }: CurrentContainerProps) => {
       </View>
       <View className="space-y-2">
         <Text className="text-center font-bold text-white text-6xl ml-5">
-          {current?.temp_c}°C
+          {Math.round(current?.temp_c)}°C
         </Text>
         <Text className="text-center text-white text-xl ml-5">
           {current?.condition?.text}

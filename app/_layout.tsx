@@ -21,13 +21,14 @@ export default function RootLayout() {
           name="Forecast"
           component={Forecast}
           options={({ route }) => ({
-            title: route.params.title || "Forecast", // Fallback title if title is not provided
+            title: route.params.title || "Forecast",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#06b6d4",
             },
             headerTintColor: "#fff",
-            headerTitleStyle: { fontWeight: "bold", fontSize: 28 },
+            headerTitleStyle: { fontWeight: "bold", fontSize: 32 },
             headerTitleAlign: "center",
+            headerShadowVisible: false,
           })}
         />
       </Stack.Navigator>

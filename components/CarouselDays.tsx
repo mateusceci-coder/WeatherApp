@@ -34,18 +34,17 @@ const CarouselDays = ({ forecastData, location }: CarouselDaysProps) => {
   const width = Dimensions.get("window").width;
 
   return (
-    <View className="flex-1 mx-auto mt-4">
+    <View className="flex-1 mx-auto mt-16">
       <Carousel
         width={width - 20}
         height={width / 1.5}
         data={forecastData}
         loop={false}
         scrollAnimationDuration={500}
-        onSnapToItem={(index) => console.log("current index:", index)}
         mode="parallax"
         renderItem={({ item }) => (
           <TouchableOpacity
-            className="flex-1 rounded-2xl bg-white px-8 py-4 opacity-40 items-center"
+            className="flex-1 rounded-2xl bg-[rgba(255,255,255,0.4)] px-8 py-4 items-center"
             onPress={() =>
               navigation.navigate("Forecast", {
                 item,
