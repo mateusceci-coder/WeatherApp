@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
 export const useForecast = ({ place }: { place: string }) => {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["forecast", place],
     queryFn: async () => {
       const res = await api.get(
@@ -15,5 +15,5 @@ export const useForecast = ({ place }: { place: string }) => {
     enabled: !!place,
   });
 
-  return { data, isLoading, isError };
+  return { data, isLoading, error };
 };

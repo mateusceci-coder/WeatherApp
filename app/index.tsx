@@ -1,9 +1,9 @@
 import React from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useState } from "react";
 import { useSearch } from "@/hooks/useSearch";
-import { debounce } from "lodash";
+import { debounce, set } from "lodash";
 import { useForecast } from "@/hooks/useForecast";
 import TextInputLocation from "@/components/TextInputLocation";
 import SearchLocationsList from "@/components/SearchLocationsList";
@@ -11,20 +11,33 @@ import CurrentContainer from "@/components/CurrentContainer";
 import CarouselDays from "@/components/CarouselDays";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { LinearGradient } from "expo-linear-gradient";
+import ForecastDisplay from "@/components/ForecastDisplay";
 
 export default function Index() {
   const [search, setSearch] = useState("");
   const [showLocations, setShowLocations] = useState(false);
   const [city, setCity] = useState("brasilia");
+  const [errorContainer, setErrorContainer] = useState(false);
   const { data: locations } = useSearch({ city: search });
-  const { data: forecast, isLoading: forecastLoading } = useForecast({
+  const {
+    data: forecast,
+    isLoading: forecastLoading,
+    error: forecastError,
+  } = useForecast({
     place: city,
   });
 
   const { current, location } = forecast || {};
   const forecastData = forecast?.forecast?.forecastday || [];
 
+  useEffect(() => {
+    if (forecastError) {
+      setErrorContainer(true);
+    }
+  }, [forecastError]);
+
   const handleLocation = (loc: any) => {
+    setErrorContainer(false);
     setShowLocations(false);
     setSearch("");
     setCity(loc.name);
@@ -40,7 +53,8 @@ export default function Index() {
   );
 
   const handleSubmit = (e: string) => {
-    setSearch(e);
+    setErrorContainer(false);
+    setCity(e);
   };
 
   return (
@@ -53,6 +67,8 @@ export default function Index() {
               setShowLocations={setShowLocations}
               textDebounce={textDebounce}
               setSearch={setSearch}
+              search={search}
+              handleSubmit={handleSubmit}
             />
             <SearchLocationsList
               handleLocation={handleLocation}
@@ -60,14 +76,13 @@ export default function Index() {
               showLocations={showLocations}
             />
           </View>
-          {forecastLoading ? (
-            <LoadingSpinner />
-          ) : (
-            <>
-              <CurrentContainer location={location} current={current} />
-              <CarouselDays forecastData={forecastData} location={location} />
-            </>
-          )}
+          <ForecastDisplay
+            errorContainer={errorContainer}
+            forecastLoading={forecastLoading}
+            location={location}
+            current={current}
+            forecastData={forecastData}
+          />
         </SafeAreaView>
       </ScrollView>
     </LinearGradient>
