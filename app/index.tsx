@@ -18,6 +18,7 @@ import { useCoordsForecast } from "@/hooks/useCoordsForecast";
 export default function Index() {
   const [search, setSearch] = useState("");
   const [showLocations, setShowLocations] = useState(false);
+  const DEFAULT_CITY = "brasilia";
 
   const [errorContainer, setErrorContainer] = useState(false);
   const { data: locations } = useSearch({ city: search });
@@ -39,8 +40,6 @@ export default function Index() {
     place: city,
   });
 
-  console.log("current", forecast?.current);
-
   const { current, location } = forecast || {};
   const forecastData = forecast?.forecast?.forecastday || [];
 
@@ -57,8 +56,10 @@ export default function Index() {
           }
         } catch (error) {
           console.error("Error getting location:", error);
-          setCity("brasilia");
+          setCity(DEFAULT_CITY);
         }
+      } else {
+        setCity(DEFAULT_CITY);
       }
     };
 
@@ -104,7 +105,7 @@ export default function Index() {
       <ScrollView className="flex-1 relative pt-16 ">
         <StatusBar style="light" />
         <SafeAreaView className="flex-1">
-          <View className=" mx-4 relative z-100 rounded-full h-full flex-1">
+          <View className=" mx-4 relative z-50 rounded-full flex-1">
             <TextInputLocation
               setShowLocations={setShowLocations}
               textDebounce={textDebounce}
