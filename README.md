@@ -1,6 +1,48 @@
-# Welcome to your Expo app 👋
+## Bibliotecas Utilizadas
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+1. **@react-navigation/native**
+
+   - **Finalidade:** Gerencia a navegação entre telas no aplicativo. Permite a criação de uma navegação intuitiva e fluida, facilitando o uso de navegadores de pilha, abas e drawers.
+   - **Documentação:** [@react-navigation/native](https://reactnavigation.org/)
+
+2. **react-query**
+
+   - **Finalidade:** Facilita o gerenciamento de dados assíncronos (como requisições de API) com cache, sincronização, e atualizações automáticas. Ajuda a melhorar o desempenho e a experiência do usuário.
+   - **Documentação:** [react-query](https://tanstack.com/query/v3/)
+
+3. **axios**
+
+   - **Finalidade:** Biblioteca para realizar requisições HTTP. Utilizada para realizar operações de CRUD (Criar, Ler, Atualizar, Excluir) com APIs de forma simples e eficiente.
+   - **Documentação:** [axios](https://axios-http.com/)
+
+4. **date-fns**
+
+   - **Finalidade:** Manipula e formata datas de maneira eficiente. Oferece diversas funções para lidar com formatação, comparação e cálculo de datas.
+   - **Documentação:** [date-fns](https://date-fns.org/)
+
+5. **lodash**
+
+   - **Finalidade:** Fornece utilitários para manipulação de arrays, objetos e outros tipos de dados de maneira otimizada. Simplifica a manipulação de dados complexos.
+   - **Documentação:** [lodash](https://lodash.com/)
+
+6. **nativewind**
+
+   - **Finalidade:** Estiliza o aplicativo de forma declarativa, semelhante ao Tailwind CSS. Permite aplicar estilos com classes, tornando o código mais legível e consistente.
+   - **Documentação:** [nativewind](https://www.nativewind.dev/)
+
+7. **react-native-reanimated-carousel**
+
+   - **Finalidade:** Cria carrosséis animados com alta performance em React Native. Fornece uma experiência de visualização dinâmica e interativa.
+   - **Documentação:** [react-native-reanimated-carousel](https://github.com/dohooo/react-native-reanimated-carousel)
+
+8. **expo-linear-gradient**
+
+   - **Finalidade:** Cria efeitos de gradiente linear nas telas do aplicativo, adicionando estilo e profundidade aos elementos visuais.
+   - **Documentação:** [expo-linear-gradient](https://docs.expo.dev/versions/latest/sdk/linear-gradient/)
+
+9. **expo-location**
+   - **Finalidade:** Acessa a localização do dispositivo. Útil para aplicativos que dependem de dados geográficos para funcionalidades como mapas, rastreamento e serviços baseados em localização.
+   - **Documentação:** [expo-location](https://docs.expo.dev/versions/latest/sdk/location/)
 
 ## Get started
 
@@ -16,35 +58,6 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
     npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Observações
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Não foi possivel testar o aplicativo em apple device.
