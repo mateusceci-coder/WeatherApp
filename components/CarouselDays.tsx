@@ -5,7 +5,7 @@ import { getDay } from "@/lib/utils";
 import Carousel from "react-native-reanimated-carousel";
 import { useNavigation } from "@react-navigation/native";
 
-interface ForecastItem {
+type ForecastItem = {
   date: string;
   day: {
     condition: {
@@ -20,14 +20,14 @@ interface ForecastItem {
     sunrise: string;
     sunset: string;
   };
-}
+};
 
-interface CarouselDaysProps {
+type CarouselDaysProps = {
   forecastData: ForecastItem[];
   location: {
     name: string;
   };
-}
+};
 
 const CarouselDays = ({ forecastData, location }: CarouselDaysProps) => {
   const navigation = useNavigation();
