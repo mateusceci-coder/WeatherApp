@@ -10,6 +10,8 @@ type ForecastDisplayProps = {
   location: any;
   current: any;
   forecastData: any;
+  forecastError: any;
+  coordsLoading: boolean;
 };
 
 const ForecastDisplay = ({
@@ -18,12 +20,14 @@ const ForecastDisplay = ({
   location,
   current,
   forecastData,
+  forecastError,
+  coordsLoading,
 }: ForecastDisplayProps) => {
   if (errorContainer) {
-    return <ErrorDisplay />;
+    return <ErrorDisplay forecastError={forecastError} />;
   }
 
-  if (forecastLoading) {
+  if (forecastLoading || coordsLoading || !current) {
     return <LoadingSpinner />;
   }
 

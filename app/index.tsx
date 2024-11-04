@@ -7,18 +7,30 @@ import { debounce, set } from "lodash";
 import { useForecast } from "@/hooks/useForecast";
 import TextInputLocation from "@/components/TextInputLocation";
 import SearchLocationsList from "@/components/SearchLocationsList";
-import CurrentContainer from "@/components/CurrentContainer";
-import CarouselDays from "@/components/CarouselDays";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import { LinearGradient } from "expo-linear-gradient";
 import ForecastDisplay from "@/components/ForecastDisplay";
+import {
+  requestForegroundPermissionsAsync,
+  getCurrentPositionAsync,
+} from "expo-location";
+import { useCoordsForecast } from "@/hooks/useCoordsForecast";
 
 export default function Index() {
   const [search, setSearch] = useState("");
   const [showLocations, setShowLocations] = useState(false);
-  const [city, setCity] = useState("brasilia");
+
   const [errorContainer, setErrorContainer] = useState(false);
   const { data: locations } = useSearch({ city: search });
+
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
+  const { data: coordsData, isLoading: coordsLoading } = useCoordsForecast({
+    latitude,
+    longitude,
+  });
+
+  const [city, setCity] = useState("");
   const {
     data: forecast,
     isLoading: forecastLoading,
@@ -27,8 +39,35 @@ export default function Index() {
     place: city,
   });
 
+  console.log("current", forecast?.current);
+
   const { current, location } = forecast || {};
   const forecastData = forecast?.forecast?.forecastday || [];
+
+  useEffect(() => {
+    const checkLocation = async () => {
+      const { status } = await requestForegroundPermissionsAsync();
+
+      if (status === "granted") {
+        try {
+          const location = await getCurrentPositionAsync();
+          if (location) {
+            setLatitude(location.coords.latitude);
+            setLongitude(location.coords.longitude);
+          }
+        } catch (error) {
+          console.error("Error getting location:", error);
+          setCity("brasilia");
+        }
+      }
+    };
+
+    checkLocation();
+
+    if (coordsData) {
+      setCity(coordsData.location.name);
+    }
+  }, [coordsData]);
 
   useEffect(() => {
     if (forecastError) {
@@ -53,6 +92,9 @@ export default function Index() {
   );
 
   const handleSubmit = (e: string) => {
+    if (e.trim() === "") return;
+
+    setShowLocations(false);
     setErrorContainer(false);
     setCity(e);
   };
@@ -62,7 +104,7 @@ export default function Index() {
       <ScrollView className="flex-1 relative pt-16 ">
         <StatusBar style="light" />
         <SafeAreaView className="flex-1">
-          <View className=" mx-4 relative z-100 rounded-full">
+          <View className=" mx-4 relative z-100 rounded-full h-full flex-1">
             <TextInputLocation
               setShowLocations={setShowLocations}
               textDebounce={textDebounce}
@@ -77,6 +119,8 @@ export default function Index() {
             />
           </View>
           <ForecastDisplay
+            coordsLoading={coordsLoading}
+            forecastError={forecastError}
             errorContainer={errorContainer}
             forecastLoading={forecastLoading}
             location={location}
