@@ -31,9 +31,8 @@ const TextInputLocation = ({
         }}
         placeholder="Search City"
         placeholderTextColor={"black"}
-        className="pl-6 h-10 flex-1 text-baseaaa rounded-full"
-        value={search}
-        onEndEditing={() => handleSubmit(search)}
+        className="pl-6 h-10 flex-1 text-base rounded-full"
+        onSubmitEditing={() => handleSubmit(search)}
         keyboardType="default"
       />
 
@@ -45,7 +44,7 @@ const TextInputLocation = ({
           name="search1"
           size={24}
           color="black"
-          className="bg-white p-2 rounded-full opacity-80"
+          className="bg-gray-300 p-2 rounded-full"
         />
       </TouchableOpacity>
     </View>
