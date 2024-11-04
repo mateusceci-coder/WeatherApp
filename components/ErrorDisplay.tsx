@@ -1,11 +1,13 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const ErrorDisplay = () => {
+const ErrorDisplay = ({ forecastError }: { forecastError: any }) => {
+  const errorMessage = forecastError?.response?.data?.error?.message;
+
   return (
-    <View className="flex items-center justify-center">
+    <View className="flex-1 items-center justify-center">
       <Text className="text-white text-2xl">
-        Error fetching data, please try again later
+        Error fetching data: {errorMessage}
       </Text>
     </View>
   );
